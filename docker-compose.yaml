@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  backend_app:
+    build:
+      context: ./flask_app
+      dockerfile: Dockerfile
+    image: flask-app:latest
+    container_name: flask-container
+    volumes:
+        - ./flask_app/:/usr/local/app
+    ports:
+      - 8000:8000 # localport:dockerport
+    command: /usr/local/bin/gunicorn run:app -b 0.0.0.0:8000 --chdir /usr/local/app
+  reverse_proxy:
+    build:
+      context: ./lua_reverse_proxy
+      dockerfile: Dockerfile
+    image: lua-reverse-proxy:latest
+    container_name: reverse-proxy-container
+    volumes:
+      - ./lua_reverse_proxy/:/usr/local/openresty/lua_reverse_proxy
+    ports:
+      - 80:80 # localport:dockerport
+
+
