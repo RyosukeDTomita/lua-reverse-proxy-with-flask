@@ -26,12 +26,22 @@ local url = ngx.var.request_url
 -- end
 -- local env = cjson.decode(env_str)
 
-local transfer_ip = 127.0.0.1
+local transfer_ip = "backend_app"
 local transfer_port = 8000
 local transfer_path = "/"
-local transfer_url = "http://" .. transfer_ip .. ":" .. transfer_port .. transfer_path
+-- local transfer_url = "http://" .. transfer_ip .. ":" .. transfer_port .. transfer_path
 
 -- リクエストを転送する先を設定
 ngx.ctx.ip = transfer_ip
 ngx.ctx.port = transfer_port
-ngx.var.pass = "http://backend_app" .. transfer_ip
+ngx.var.pass = "http://" .. transfer_ip .. ":" .. transfer_port .. transfer_path
+
+-- log
+ngx.log(ngx.INFO, "request_url: ", url)
+print("request_url: ", url)
+-- nginxのレスポンスヘッダにcookieを設定
+-- ngx.header["Set-Cookie"] = "my_cookie=setcookie; Path=/;"
+-- nginxのリクエストヘッダにcookieを設定
+ngx.req.set_header("Cookie", "my_cookie=set_header")
+
+

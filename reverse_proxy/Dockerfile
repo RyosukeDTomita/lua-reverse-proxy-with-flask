@@ -15,8 +15,12 @@ wget -P /usr/local/openresty/luajit/share/lua/5.1/resty/ https://raw.githubuserc
 rm -rf /var/lib/apt/lists/*
 EOF
 
-FROM depencencies AS app
-COPY ./ /usr/local/openresty/lua_reverse_proxy
+FROM depencencies as app
+# nginxの-pオプションの代わりにWORKDIRを指定
+WORKDIR /usr/local/openresty/reverse_proxy
+COPY ./conf/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+# COPY ./ /usr/local/openresty/reverse_proxy
+
 
 EXPOSE 80
 # Not using daemon mode.

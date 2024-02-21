@@ -19,6 +19,8 @@ def _create_app():
     INIConfig(app)
     current_dir = os.path.dirname(__file__)
     config_ini_path = os.path.join(current_dir, "../config.ini")
+    if not os.path.exists(config_ini_path):
+        raise FileNotFoundError("Not Found config.ini.")
     app.config.from_inifile(config_ini_path, encoding="utf-8")
 
     # RuntimeErrorを回避
