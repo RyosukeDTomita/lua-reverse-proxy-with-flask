@@ -27,6 +27,18 @@
 3. lua スクリプトにより動的にリクエストを転送するバックエンドが決まる。
 4. リクエストがバックエンドに転送される。
 
+### flask cli
+現状動作確認のみしかやってないが気が向いたら定期処理とか実行させたい。
+
+```shell
+docker compose run -it backend_app "/bin/bash"
+root@d8ed0df88ad6:/usr/local/app# ls
+Dockerfile   app	 requirements.txt  tests
+__pycache__  config.ini  run.py
+root@d8ed0df88ad6:/usr/local/app# flask test hello
+Hello, World.
+```
+
 ---
 
 ## LICENSE
